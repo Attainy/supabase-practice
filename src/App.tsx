@@ -11,24 +11,42 @@ function App() {
   const [todos, setTodos] = useState<Todo[] | null>([]);
 
   useEffect(() => {
-    getCountries();
+    getTodos();
   }, []);
 
-  async function getCountries() {
+  async function getTodos() {
     const { data } = await supabase.from("todo").select();
     setTodos(data);
   }
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault(); // 폼 제출 시 페이지 리로드 방지
+
+    const newTodo = {
+      title: "New Todo",
+      completed: true,
+    };
+
+    const { error } = await supabase.from("todo").insert([newTodo]);
+
+    if (error) {
+      console.error("Error inserting todo:", error.message);
+    } else {
+      alert("Todo added successfully!");
+      getTodos(); // 리스트 갱신
+    }
+  };
 
   return (
     <>
       <div>
         <ul>
           {todos?.map((todo) => (
-            <li key={todo?.title}>{todo.title}</li>
+            <li key={todo.id}>{todo.title}</li>
           ))}
         </ul>
       </div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <input type="text" />
         <button>할일 넣기</button>
       </form>
