@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { supabase } from "./utils/supabaseClient";
-import { Tables } from "./types/supabase.types";
+import { useEffect, useState } from 'react';
+import { supabase } from './utils/supabaseClient';
+import { Tables } from './types/supabase.types';
 
 // import { Database } from './supabaseTypes';
 // type Todo = Database['public']['Tables']['todo']['Row'];
 
-type Todo = Tables<"todo">;
+type Todo = Tables<'todo'>;
 
 function App() {
   const [todos, setTodos] = useState<Todo[] | null>([]);
@@ -15,7 +15,7 @@ function App() {
   }, []);
 
   async function getTodos() {
-    const { data } = await supabase.from("todo").select();
+    const { data } = await supabase.from('todo').select();
     setTodos(data);
   }
 
@@ -23,16 +23,16 @@ function App() {
     event.preventDefault(); // 폼 제출 시 페이지 리로드 방지
 
     const newTodo = {
-      title: "New Todo",
+      title: 'New Todo',
       completed: true,
     };
 
-    const { error } = await supabase.from("todo").insert([newTodo]);
+    const { error } = await supabase.from('todo').insert([newTodo]);
 
     if (error) {
-      console.error("Error inserting todo:", error.message);
+      console.error('Error inserting todo:', error.message);
     } else {
-      alert("Todo added successfully!");
+      alert('Todo added successfully!');
       getTodos(); // 리스트 갱신
     }
   };
@@ -40,11 +40,7 @@ function App() {
   return (
     <>
       <div>
-        <ul>
-          {todos?.map((todo) => (
-            <li key={todo.id}>{todo.title}</li>
-          ))}
-        </ul>
+        <ul>{todos?.map((todo) => <li key={todo.id}>{todo.title}</li>)}</ul>
       </div>
       <form onSubmit={handleSubmit}>
         <input type="text" />
