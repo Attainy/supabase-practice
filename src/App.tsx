@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { supabase } from "./utils/supabaseClient";
+import { Tables } from "./types/supabase.types";
 
-interface Todo {
-  id: number;
-  title: string;
-  completed: boolean;
-  updated_at: Date;
-  created_at: Date;
-}
+// import { Database } from './supabaseTypes';
+// type Todo = Database['public']['Tables']['todo']['Row'];
+
+type Todo = Tables<"todo">;
 
 function App() {
   const [todos, setTodos] = useState<Todo[] | null>([]);
