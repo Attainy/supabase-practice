@@ -22,11 +22,19 @@ function App() {
   }
 
   return (
-    <ul>
-      {todos?.map((todo) => (
-        <li key={todo?.title}>{todo.title}</li>
-      ))}
-    </ul>
+    <>
+      <div>
+        <ul>
+          {todos?.map((todo) => (
+            <li key={todo?.title}>{todo.title}</li>
+          ))}
+        </ul>
+      </div>
+      <form>
+        <input type="text" />
+        <button>할일 넣기</button>
+      </form>
+    </>
   );
 }
 

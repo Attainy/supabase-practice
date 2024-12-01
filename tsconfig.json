@@ -3,5 +3,12 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    "incremental": true, // 증분 빌드 활성화
+    "tsBuildInfoFile": "./build/tsconfig.tsbuildinfo", // 캐시 파일 경로
+    "outDir": "./dist",
+    "module": "commonjs",
+    "target": "es5"
+  }
 }
