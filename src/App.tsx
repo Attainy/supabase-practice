@@ -9,6 +9,7 @@ const userUUID = '3';
 function App() {
   const [todos, setTodos] = useState<Todo[] | null>([]);
   const [fileUrl, setFileUrl] = useState<string | null>(null);
+  const [fileName, setFileName] = useState<string | null>(null);
   const [uploadedFileUrl, setUploadedFileUrl] = useState<string[]>([]);
 
   useEffect(() => {
@@ -51,6 +52,8 @@ function App() {
       console.error('No files selected.');
       return;
     }
+    setFileName(files[0].name);
+    console.log(files[0].name);
 
     const uploadedUrls: string[] = [];
 
@@ -69,14 +72,17 @@ function App() {
 
       // 업로드
       const res = supabase.storage.from('resume_images').getPublicUrl(filePath);
-      if (res.data.publicUrl) {
+      if (res.data.publicUrl && fileName) {
         uploadedUrls.push(res.data.publicUrl);
         setFileUrl(res.data.publicUrl);
 
         // Supabase DB에 이미지 URL 저장
-        const { error: dbError } = await supabase
-          .from('page')
-          .insert([{ title: res.data.publicUrl, body: '이미지 주소' }]);
+        const { error: dbError } = await supabase.from('page').insert([
+          {
+            title: res.data.publicUrl.toString(),
+            body: fileName.toString(),
+          },
+        ]);
 
         if (dbError) {
           console.error('Error saving URL to database:', dbError.message);
