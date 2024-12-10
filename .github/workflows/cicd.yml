@@ -32,7 +32,7 @@ jobs:
         cache: 'yarn'
 
     - name: Install dependencies
-      run: yan install
+      run: yarn
 
     - name: Build the project
       run: yarn build
