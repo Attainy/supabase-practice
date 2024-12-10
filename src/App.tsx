@@ -61,7 +61,8 @@ function App() {
       // 파일 이름 수정
       const filePath = `${userUUID}/${Date.now()}`;
       // Supabase Storage에 업로드
-      const { data, error } = await supabase.storage
+      // const { data, error } = await supabase.storage
+      const { error } = await supabase.storage
         .from('resume_images')
         .upload(filePath, file);
 
