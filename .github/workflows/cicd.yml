@@ -3,6 +3,9 @@
 
 name: Node.js CI
 
+env:
+  VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+  VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 on:
   push:
     branches: [ "main", "develop", "release" ]
@@ -33,9 +36,7 @@ jobs:
 
     - name: Build the project
       run: yarn build
-      env:
-        VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-        VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+
         
   Deploy-Preview:
     runs-on: ubuntu-latest
